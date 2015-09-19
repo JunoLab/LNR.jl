@@ -1,5 +1,6 @@
 module LNR
 
+using Compat
 using Lazy
 import Base: seek, position, eof, peek
 
@@ -23,7 +24,7 @@ immutable LineNumberingReader{T<:IO} <: IO
 end
 
 LineNumberingReader(io::IO) = LineNumberingReader(io, [1])
-LineNumberingReader(s::String) = LineNumberingReader(IOBuffer(s))
+LineNumberingReader(s::AbstractString) = LineNumberingReader(IOBuffer(s))
 
 eof(r::LineNumberingReader) = eof(r.io)
 position(r::LineNumberingReader) = position(r.io)
@@ -31,8 +32,8 @@ peek(r::LineNumberingReader) = Base.peek(r.io)
 
 scannedindex(r::LineNumberingReader, i) = i < r.lines[end]
 
-function Base.read(r::LineNumberingReader, ::Type{Uint8})
-  c = read(r.io, Uint8)
+function Base.read(r::LineNumberingReader, ::Type{UInt8})
+  c = read(r.io, UInt8)
   c == '\n' && !scannedindex(r, position(r)) && !eof(r) &&
      push!(r.lines, position(r)+1)
   return c
@@ -40,7 +41,7 @@ end
 
 function Base.skip(r::LineNumberingReader, n::Integer)
   if n > 0 && !scannedindex(r, position(r) + n)
-    @dotimes n read(r, Uint8)
+    @dotimes n read(r, UInt8)
   else
     skip(r.io, n)
   end
