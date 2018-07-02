@@ -8,7 +8,7 @@ export LineNumberingReader, line, column, Cursor, cursor, seekline, seekcol
 
 # Cursor Type
 
-immutable Cursor
+struct Cursor
   line::Int
   column::Int
 end
@@ -18,7 +18,7 @@ Base.isless(x::Cursor, y::Cursor) =
 
 # LNR
 
-immutable LineNumberingReader{T<:IO} <: IO
+struct LineNumberingReader{T<:IO} <: IO
   io::T
   lines::Vector{Int} # The byte index of the first char in each line
 end
