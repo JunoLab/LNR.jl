@@ -34,7 +34,7 @@ scannedindex(r::LineNumberingReader, i) = i < r.lines[end]
 
 function Base.read(r::LineNumberingReader, ::Type{UInt8})
   c = read(r.io, UInt8)
-  c == '\n' && !scannedindex(r, position(r)) && !eof(r) &&
+  c == UInt8('\n') && !scannedindex(r, position(r)) && !eof(r) &&
      push!(r.lines, position(r)+1)
   return c
 end
