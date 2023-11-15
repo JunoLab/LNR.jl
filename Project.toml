@@ -1,6 +1,6 @@
 name = "LNR"
 uuid = "7c4cb9fa-83a0-5386-9231-d6167c818060"
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 Compat = "34da2185-b29b-5c13-b0c7-acf172513d20"
